@@ -3,7 +3,7 @@ import React, { useReducer } from 'react'
 import OrdersReducer from './ordersReducer'
 
 import OrdersContext from './ordersContext'
-import SELECT_PRODUCT from '../../types'
+import {SELECT_PRODUCT, CONFIRM_ORDER_PLATE} from '../../types'
 
 const OrderState = (props) => {
 
@@ -22,12 +22,20 @@ const OrderState = (props) => {
         })
     }
 
+    const confirmOrderPlate = (order) => {
+        dispatch({
+            type: CONFIRM_ORDER_PLATE,
+            payload: order
+        })
+    }
+
 
     return (
         <OrdersContext.Provider value={{
             order: state.order,
             plate: state.plate,
-            selectProduct
+            selectProduct,
+            confirmOrderPlate
         }}>
             {props.children}
         </OrdersContext.Provider>
