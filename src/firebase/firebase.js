@@ -1,6 +1,6 @@
 import { initializeApp } from 'firebase/app'
 import firebaseConfig from './config'
-import { getDatabase, ref, set, child, get, onValue, update, push } from "firebase/database";
+import { getDatabase } from "firebase/database";
 
 class Firebase {
     constructor() {

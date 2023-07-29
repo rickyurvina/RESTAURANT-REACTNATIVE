@@ -55,7 +55,7 @@ function App(): JSX.Element {
                 options={
                   {
                     title: 'Menu',
-                    headerRight: props=><SummaryButton />,
+                    headerRight: props => <SummaryButton />,
                   }
                 } />
               <Stack.Screen name="PlateDetail" component={PlateDetail} options={{ title: 'PlateDetail' }} />
@@ -70,9 +70,5 @@ function App(): JSX.Element {
 
   );
 }
-
-const styles = StyleSheet.create({
-
-});
 
 export default App;

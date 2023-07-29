@@ -6,12 +6,23 @@ import { useNavigation } from '@react-navigation/native'
 import globalStyles
   from '../assets/styles/global'
 import Icon from 'react-native-vector-icons/FontAwesome';
+import firebase from '../firebase'
+import { ref, set } from "firebase/database";
+import { generateId } from '../helpers'
 
 const OrderResume = () => {
 
-  const { order, confirmOrderPlate, total, showTotalToPay, deletePlate } = useContext(OrdersContext)
+  const {
+    order,
+    confirmOrderPlate,
+    total,
+    showTotalToPay,
+    deletePlate,
+    orderPlaced
+  } = useContext(OrdersContext)
 
   const navigation = useNavigation()
+
 
   useEffect(() => {
     calculateTotal()
@@ -31,8 +42,24 @@ const OrderResume = () => {
       [
         {
           text: 'Confirm',
-          onPress: () => {
-         
+          onPress: async () => {
+            const id = generateId()
+
+            const orderObj = {
+              id: id,
+              order: order,
+              total: Number(total),
+              status: 'pending',
+              time: 0,
+              created_at: Date.now()
+            }
+            try {
+              await set(ref(firebase.db, 'orders/' + orderObj.id), orderObj);
+              orderPlaced(orderObj.id)
+              navigation.navigate('OrderProgress')
+            } catch (error) {
+              console.log(error)
+            }
           }
         },
         {
@@ -139,7 +166,7 @@ const OrderResume = () => {
                     <Text color='white'>
                       ${plate.total}
                     </Text>
-                 
+
                   </Center>
                   <Center flex={1}>
                     <Icon
@@ -147,7 +174,7 @@ const OrderResume = () => {
                       size={15}
                       backgroundColor="transparent"
                       color='red'
-                      onPress={() => { confirmDelete(plate.id)}}
+                      onPress={() => { confirmDelete(plate.id) }}
                     />
                   </Center>
                 </Box>
