@@ -3,19 +3,20 @@ import React, { useReducer } from 'react'
 import OrdersReducer from './ordersReducer'
 
 import OrdersContext from './ordersContext'
-import {SELECT_PRODUCT, CONFIRM_ORDER_PLATE} from '../../types'
+export const SHOW_SUMMARY_ORDER= 'SHOW_SUMMARY_ORDER'
+import { SELECT_PRODUCT, CONFIRM_ORDER_PLATE, DELETE_PLATE } from '../../types'
 
 const OrderState = (props) => {
 
     const initialState = {
         order: [],
-        plate: null
+        plate: null,
+        total: 0
     }
 
     const [state, dispatch] = useReducer(OrdersReducer, initialState)
 
     const selectProduct = (product) => {
-        console.log({product})
         dispatch({
             type: SELECT_PRODUCT,
             payload: product
@@ -29,13 +30,30 @@ const OrderState = (props) => {
         })
     }
 
+    const showTotalToPay = (total) => {
+        dispatch({
+            type: SHOW_SUMMARY_ORDER,
+            payload: total
+        })
+    }
+
+    const deletePlate = (id) => {
+        dispatch({
+            type: DELETE_PLATE,
+            payload: id
+        })
+    }
+
 
     return (
         <OrdersContext.Provider value={{
             order: state.order,
             plate: state.plate,
+            total: state.total,
             selectProduct,
-            confirmOrderPlate
+            confirmOrderPlate,
+            showTotalToPay,
+            deletePlate
         }}>
             {props.children}
         </OrdersContext.Provider>

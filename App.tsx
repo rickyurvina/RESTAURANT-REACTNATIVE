@@ -15,8 +15,8 @@ import OrderResume from './src/views/OrderResume';
 import FirebaseState from './src/context/firebase/firebaseState';
 
 import OrderState from './src/context/orders/ordersState';
-import { NativeBaseProvider, extendTheme } from "native-base";
-
+import { Button, NativeBaseProvider, extendTheme } from "native-base";
+import SummaryButton from './src/components/SummaryButton';
 
 const Stack = createNativeStackNavigator();
 const newColorTheme = {
@@ -27,6 +27,8 @@ const newColorTheme = {
   },
 };
 const theme = extendTheme({ colors: newColorTheme });
+
+
 function App(): JSX.Element {
 
 
@@ -47,7 +49,15 @@ function App(): JSX.Element {
               }}
             >
               <Stack.Screen name="NewOrder" component={NewOrder} options={{ title: 'NewOrder' }} />
-              <Stack.Screen name="Menu" component={Menu} options={{ title: 'Menu' }} />
+              <Stack.Screen
+                name="Menu"
+                component={Menu}
+                options={
+                  {
+                    title: 'Menu',
+                    headerRight: props=><SummaryButton />,
+                  }
+                } />
               <Stack.Screen name="PlateDetail" component={PlateDetail} options={{ title: 'PlateDetail' }} />
               <Stack.Screen name="FormPlate" component={FormPlate} options={{ title: 'FormPlate' }} />
               <Stack.Screen name="OrderResume" component={OrderResume} options={{ title: 'OrderResume' }} />

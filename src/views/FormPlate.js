@@ -51,7 +51,6 @@ const FormPlate = () => {
         {
           text: 'Confirm',
           onPress: () => {
-            console.log('Order confirmed')
             const order = {
               ...plate,
               cant,
@@ -59,7 +58,6 @@ const FormPlate = () => {
             }
             confirmOrderPlate(order)
             navigation.navigate('OrderResume')
-
           }
         },
         {
@@ -67,7 +65,6 @@ const FormPlate = () => {
           style: 'cancel'
         }
       ]
-
     )
   }
 
